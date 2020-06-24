@@ -5,51 +5,35 @@ const cm = new CalculatorManager();
 class EventManager {
 
   addAllEventListeners() {
-    this.addClearEventListener();
-    this.addDotEventListener();
-    this.addDelEventListener();
-    this.addDigitEventListener();
-    this.addEqualsEventListener();
-    this.addOperatorEventListener();
+    const clear = document.getElementById("clear");
+    const dot = document.getElementById("dot");
+    const del = document.getElementById("del");
+    const digits = document.querySelectorAll(".digit");
+    const equals = document.getElementById("equals");
+    const operators = document.querySelectorAll(".operator");
+
+    this.listen("click", clear, cm.onClearEntry);
+    this.listen("click", dot, cm.onDotEntry);
+    this.listen("click", del, cm.onDelEntry);
+    this.listen("click", digits, cm.onDigitEntry);
+    this.listen("click", equals, cm.onEqualsEntry);
+    this.listen("click", operators, cm.onOperatorEntry);
     this.addWindowLoadEventListener();
   }
 
-  addClearEventListener() {
-    const clear = document.getElementById("clear");
-    clear.addEventListener("click", cm.onClearEntry);
-  }
-
-  addDotEventListener() {
-    const dot = document.getElementById("dot");
-    dot.addEventListener("click", cm.onDotEntry);
-  }
-
-  addDelEventListener() {
-    const del = document.getElementById("del");
-    del.addEventListener("click", cm.onDelEntry);
-  }
-
-  addDigitEventListener() {
-    const digits = document.querySelectorAll(".digit");
-    digits.forEach(digit => {
-      digit.addEventListener("click", (e) => {
-        cm.onDigitEntry(e);
-      });
-    });
-  }
-
-  addEqualsEventListener() {
-    const equals = document.getElementById("equals");
-    equals.addEventListener("click", cm.onEqualsEntry);
-  }
-
-  addOperatorEventListener() {
-    const operators = document.querySelectorAll(".operator");
-    operators.forEach(operator => {
-      operator.addEventListener("click", (e) => {
-        cm.onOperatorEntry(e);
-      });
-    });
+  listen(event, target, action) {
+    if (target.length === undefined) {
+      target.addEventListener(event, (e) => {
+        action(e);
+      })
+    }
+    else {
+      target.forEach(elmt => {
+        elmt.addEventListener(event, (e) => {
+          action(e);
+        })
+      })
+    }
   }
 
   addWindowLoadEventListener() {

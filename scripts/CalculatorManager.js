@@ -50,7 +50,6 @@ class CalculatorManager {
     const operator = e.target.textContent;
     const newNum = vm.getNewNum();
     const lastEntry = vm.getDisplayVal().split("").pop();
-    console.log(lastEntry);
     if (!vm.isNum(newNum) || !vm.isOperator(operator) || vm.isOperator(lastEntry)) {
       return;
     }
